@@ -2,19 +2,24 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ExpressionEvaluator {
+// Clase que implementa la interfaz Evaluator para evaluar expresiones en notación postfija.
+class ExpressionEvaluator implements Evaluator {
 
-    public static void evaluateFromFile(String filePath) throws IOException {
+    // Implementación del método de la interfaz para evaluar expresiones desde un archivo.
+    @Override
+    public void evaluateFromFile(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 int result = evaluateExpression(line);
-                System.out.println("Expression: " + line + " = " + result);
+                System.out.println("Expresión: " + line + " = " + result);
             }
         }
     }
 
-    private static int evaluateExpression(String expression) {
+    // Implementación del método de la interfaz para evaluar una expresión en notación postfija.
+    @Override
+    public int evaluateExpression(String expression) {
         OperandStack operandStack = new OperandStack();
 
         for (String token : expression.split("\\s")) {
@@ -30,11 +35,13 @@ public class ExpressionEvaluator {
         return operandStack.pop();
     }
 
-    private static boolean isNumeric(String str) {
+    // Método auxiliar para verificar si una cadena es un número entero.
+    private boolean isNumeric(String str) {
         return str.matches("-?\\d+");
     }
 
-    private static int performOperation(String operator, int operand1, int operand2) {
+    // Método auxiliar para realizar operaciones aritméticas.
+    private int performOperation(String operator, int operand1, int operand2) {
         switch (operator) {
             case "+":
                 return operand1 + operand2;
@@ -45,7 +52,7 @@ public class ExpressionEvaluator {
             case "/":
                 return operand1 / operand2;
             default:
-                throw new IllegalArgumentException("Unsupported operator: " + operator);
+                throw new IllegalArgumentException("Operador no soportado: " + operator);
         }
     }
 }

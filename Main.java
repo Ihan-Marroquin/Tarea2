@@ -6,7 +6,9 @@ public class Main {
         String filePath = "datos.txt";
 
         try {
-            ExpressionEvaluator.evaluateFromFile(filePath);
+            // Crea una instancia de la clase que implementa la interfaz y llama al método para evaluar expresiones desde el archivo.
+            ExpressionEvaluator evaluator = new ExpressionEvaluator();
+            evaluator.evaluateFromFile(filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
